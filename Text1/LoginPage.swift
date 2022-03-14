@@ -9,17 +9,30 @@ import SwiftUI
 import Firebase				
 
 
-
+class FirebaseManager :NSObject {
+    
+    let auth : Auth
+    
+    static let shared = FirebaseManager()
+    
+    override init(){
+        
+        FirebaseApp.configure()
+        
+        self.auth = Auth.auth()
+        
+        super.init()
+        
+    }
+    
+}
 
 struct LoginPage: View {
     
     @State var isLoginMode = false
     @State var email = ""
     @State var password = ""
-    
-    init() {
-        FirebaseApp.configure()
-    }
+    @State var shouldShowImagePicker = false
     
     var body: some View {
         NavigationView {
@@ -34,7 +47,9 @@ struct LoginPage: View {
                
                     if !isLoginMode {
                         
-                        Button(action: {} ,
+                        Button(action: {
+                            shouldShowImagePicker.toggle()
+                        } ,
                                
                             label: {
                         Image(systemName:"person.fill").font(
@@ -73,7 +88,14 @@ struct LoginPage: View {
         .background(Color(.init(white: 0, alpha: 0.05)).ignoresSafeArea())
         }
         .navigationViewStyle(StackNavigationViewStyle())
+        .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil, content: {
+            Text("EXAMPLE COVER")
+            ImagePicker(image: $image)
+        })
+       
     }
+        @State var image :UIImage?
+    
     private func handleAction() {
         if isLoginMode {
             LoginUser()
@@ -85,7 +107,7 @@ struct LoginPage: View {
     
     private func LoginUser(){
         
-        Auth.auth().signIn(withEmail: email, password: password){
+        FirebaseManager.shared.auth.signIn(withEmail: email, password: password){
                 Result,Error in
                 if Error != nil{
                     print("Falled to login user", Error as Any)
@@ -101,7 +123,7 @@ struct LoginPage: View {
     
     private func createNewAccount() {
         
-    Auth.auth().createUser(withEmail: email, password: password){
+        FirebaseManager.shared.auth.createUser(withEmail: email, password: password){
             Result,Error in
             if Error != nil{
                 print("Falled to create user", Error as Any)

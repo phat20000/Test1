@@ -16,6 +16,7 @@
 		3E20861027D8AE2D00E32553 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 3E20860F27D8AE2D00E32553 /* FirebaseAuth */; };
 		3E20861227D8AE2D00E32553 /* FirebaseStorage in Frameworks */ = {isa = PBXBuildFile; productRef = 3E20861127D8AE2D00E32553 /* FirebaseStorage */; };
 		3E20861727D8B1E300E32553 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 3E20861627D8B1E300E32553 /* GoogleService-Info.plist */; };
+		3EA8CED227DF439E001E02A5 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3EA8CED127DF439E001E02A5 /* ImagePicker.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +50,7 @@
 		3E2085FA27D74A3E00E32553 /* Text1UITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Text1UITests.swift; sourceTree = "<group>"; };
 		3E2085FC27D74A3E00E32553 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		3E20861627D8B1E300E32553 /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		3EA8CED127DF439E001E02A5 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -105,6 +107,7 @@
 				3E2085DF27D74A3500E32553 /* LoginPage.swift */,
 				3E20861627D8B1E300E32553 /* GoogleService-Info.plist */,
 				3E2085E127D74A3D00E32553 /* Assets.xcassets */,
+				3EA8CED127DF439E001E02A5 /* ImagePicker.swift */,
 				3E2085E627D74A3D00E32553 /* Info.plist */,
 				3E2085E327D74A3D00E32553 /* Preview Content */,
 			);
@@ -274,6 +277,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				3EA8CED227DF439E001E02A5 /* ImagePicker.swift in Sources */,
 				3E2085E027D74A3500E32553 /* LoginPage.swift in Sources */,
 				3E2085DE27D74A3500E32553 /* Text1App.swift in Sources */,
 			);
