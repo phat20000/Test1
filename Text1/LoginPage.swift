@@ -6,12 +6,13 @@
 //
 
 import SwiftUI
-import Firebase				
+import Firebase
 
 
 class FirebaseManager :NSObject {
     
     let auth : Auth
+    let storage : Storage
     
     static let shared = FirebaseManager()
     
@@ -20,6 +21,8 @@ class FirebaseManager :NSObject {
         FirebaseApp.configure()
         
         self.auth = Auth.auth()
+        
+        self.storage =Storage.storage()
         
         super.init()
         
@@ -52,9 +55,22 @@ struct LoginPage: View {
                         } ,
                                
                             label: {
-                        Image(systemName:"person.fill").font(
-                            .system(size:64)).padding()
-
+                               
+                            VStack{
+                                    
+                                if let image = self.image {
+                                    Image(uiImage: image)
+                                        .resizable()
+                                        .scaledToFill()
+                                        .frame(width:128, height:128)
+                                        .cornerRadius(64)
+                                }else{
+                                    Image(systemName:"person.fill").font(
+                                        .system(size:64)).padding().foregroundColor(.black)
+                                }
+                                }
+                            .overlay(RoundedRectangle(cornerRadius: 64)
+                                        .stroke(Color.black, lineWidth: 3))
                         })
                         
                     }
@@ -89,7 +105,6 @@ struct LoginPage: View {
         }
         .navigationViewStyle(StackNavigationViewStyle())
         .fullScreenCover(isPresented: $shouldShowImagePicker, onDismiss: nil, content: {
-            Text("EXAMPLE COVER")
             ImagePicker(image: $image)
         })
        
@@ -116,7 +131,15 @@ struct LoginPage: View {
             }
                 print("Sucessfully login user: \(Result?.user.uid ?? "")")
             self.LoginStatusMessage = ("Sucessfully login user: \(Result?.user.uid ?? "")")}
+            self.persitImageToStorage()
+    }
+    
+    private func persitImageToStorage(){
+        _ = UUID.init(uuidString: <#T##String#>)
         
+        guard let uid =	FirebaseManager.shared.auth.currentUser?.uid
+        else{return}
+       	 FirebaseManager.shared.storage.reference(withPath: uid)
     }
     
     @State var LoginStatusMessage = ""
