@@ -22,7 +22,7 @@ class FirebaseManager :NSObject {
         
         self.auth = Auth.auth()
         
-        self.storage =Storage.storage()
+        self.storage = Storage.storage()
         
         super.init()
         
@@ -135,11 +135,27 @@ struct LoginPage: View {
     }
     
     private func persitImageToStorage(){
-        _ = UUID.init(uuidString: <#T##String#>)
-        
+      //  _ = UUID.init(uuidString: <#T##String#>)
         guard let uid =	FirebaseManager.shared.auth.currentUser?.uid
+       
         else{return}
-       	 FirebaseManager.shared.storage.reference(withPath: uid)
+        let ref = FirebaseManager.shared.storage.reference(withPath: uid)
+        guard let imageData = self.image?.jpegData(compressionQuality: 0.5)
+        else{return}
+        ref.putData(imageData,metadata: nil) { metadata, Error in
+            if let Error = Error {
+                self.LoginStatusMessage = "failed to push image to Storage:\(Error)"
+                return
+            }
+            ref.downloadURL { (URL, Error) in
+                if let Error = Error{
+                    self.LoginStatusMessage = "failed to retrieve downloadURL:\(Error)"
+                    return
+                }
+                self.LoginStatusMessage = "Sucessfully storage image with url:\(URL?.absoluteString ?? "")"
+                print(URL?.absoluteString)
+            }
+        }
     }
     
     @State var LoginStatusMessage = ""
